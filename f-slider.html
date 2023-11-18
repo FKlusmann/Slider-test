@@ -1,0 +1,204 @@
+<!-- f-slider.html -->
+<!-- Inspired by Mr. Eric A. Meyer, 
+      https://meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom/ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- based https://jsfiddle.net/j08691/6hxohp41/  -->
+  <title>Slider Test</title>
+  <style>
+    html { --slider: 1; }
+
+    .slider > * { display: block; }
+
+    main h1 { font-size: calc(1rem * var(--slider) * 2.0000); 
+      line-height: calc(1.2 - (0.03 * var(--slider))); }
+
+    main h2 { font-size: calc(1rem * var(--slider) * 1.6818);
+      line-height: calc(1.2 - (0.03 * var(--slider))); }
+
+    main h3 { font-size: calc(1rem * var(--slider) * 1.4142);
+      line-height: calc(1.2 - (0.03 * var(--slider))); }
+
+    main h4 { font-size: calc(1rem * var(--slider) * 1.1892);
+    } /* Using the default line-height */
+
+    main p { font-size: calc(1rem * var(--slider));
+      line-height: 1.25; }
+
+    main h5 { font-size: calc(1rem * var(--slider) * 0.8409); }
+
+    main h6 { font-size: calc(1rem * var(--slider) * 0.67); }
+
+    /* Based on the musical tetratonic scale. See 
+    |* https://spencermortensen.com/articles/typographic-scale/
+    |* n = 4, r = 2, f0 = 1rem 
+    \* */
+    /* I want <h1> line-height to be 1.2 at slider 0.5 and 1.0 at slider 5.0 See  
+    |* https://www.smashingmagazine.com/2013/05/typographic-design-patterns-practices-case-study-2013/
+    \* */
+
+    #slider-box {
+      background: lightgrey;
+      opacity: 0.7;
+      font-size: 14px;
+      width: 170px;
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+     }
+
+    #to-top {
+      background: lightgrey;
+      opacity: 0.7;
+      height: 40px;
+      width: 40px;
+      position: fixed;
+      bottom: 55px;
+      right: 85px;
+      right: calc((170px / 2) - (40px / 2) + 5px);
+    }
+    .center {
+
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+
+    main {
+      /* width: 80ch; */
+      max-width: 11in; 
+      border: 3px solid blue;
+      margin: auto;
+    }
+
+
+
+  </style>
+</head>
+
+<body>
+  <h1 class="center">&lt;h1>A Demonstration: Let the user control the font-size.&lt;/h1></h1>
+  <p>This text is between &lt;body> and &lt;main>. &lt;main> ... &lt;/main is oultlined in blue. This area is reserved for the page header and navigation. It is not part of the demo. </p>
+
+  <div id="hold-to-top">
+    <a href="#"><img id="to-top" src="./../includes/images/to-top.jpg" alt="Go to the top icon.">
+    </a>
+  </div>
+
+  <div id="slider-box">
+    <div class="slider" unit="em" target="text-slider">
+
+      <label for="t-size" >Move this to change text size.<br></label>
+      <span class="readout"></span>
+ 
+      <input id="t-size" class="text-slider" type="range" min="0.5" max="5" value="1" step="0.1">
+
+    </div>
+  </div>
+
+  <hr>
+  <main>
+    My goal is to allow the user to control the font and font size. Media Queries are nice - for the author, maybe not for the viewer. These lines are inside of &lt;main> but are not inside another element. <br>This test was inspired by Mr. Eric A. Meyer's 
+    <a href="https://meyerweb.com/eric/thoughts/2023/11/01/blinded-by-the-light-dom/">Blinded By the Light DOM</a>. <br><br>While his article focused on Web Components, it was his examples of using sliders to change font size that slapped the side of my head. This is my test. <br><br>
+
+    Move the slider to change the font size inside my &lt;main> without touching the header or 
+    footer. 
+
+    <h1>This is an &lt;h1>. The font goes from 16px to 160px with the slider. The line-height 
+      goes from 18.9667px to 168px. The Line-height reduces from 1.19 to 1.05.</h1>
+
+    <h2>This is an &lt;h2>. The font goes from 13.4544px to 134.544px with the slider. The 
+      line-height goes from 15.95px to 141.267px. The Line-height decreases from 1.185 to 1.05</h2>
+
+    <h3>This is an &lt;h3>.<br>
+      Without understanding them, I have used Web Components to load a Site Header. In my &lt;head> ... &lt;head> I have &lt;script src="./includes/header.js">&lt;/script>. In the &lt;body> ... &lt;/body> the Web Component is called with &lt;header-component>&lt;/header-component>.</h3> 
+
+    <h4>This is an &lt;h4>.<br>
+      Within the header.js file, only the first and last few lines are JavaScript. Everything else is straight HTML-5. Mine is:<br><br>
+      class Header extends HTMLElement {
+        constructor() { super(); }<br>
+        connectedCallback() { this.innerHTML = `<br>
+          //<br>
+          // &lt;header> (everything) &lt;/header> <br>
+          //<br>
+          `; }}
+
+customElements.define('header-component', Header);
+<br><br>As Mr Meyer has said, it may be ugly, but it does work.
+
+
+        </h4>
+
+    <p>This is my test &lt;p>. <br>
+      It loads at the user's chosen font-size  (normally 16px with a line-height 
+      of 20px, a 1.25 ratio) With the slider, the font-size range is 8px 
+      to 100px with the same line-height.  
+      </p>
+
+    <h5>This is an &lt;h5>.<br>
+      My Web Components are from my "Found and Saved" file. I found this on stackoverflow.com while searching for a way to include HTML in a document. <br>
+      &lt;object name="header" type="text/html" data="./includes/header.">&lt;/object> <br> 
+      and &lt;embed type="text/html" src="./includes/header.inc"> 
+        did not work for me.
+ </h5>
+
+    <h6>This is an &lt;h6>.<br>
+      Of course, these “rules” are not set in stone. Rather, they are a set of rough guidelines 
+      you can use as a basis for setting typography. Every website is unique, and you may want 
+      to modify your choices at each stage of your design to suit your layout.</h6>
+  </main>
+
+
+  <footer><br>
+    <table class="center"><tr><td>
+    <img src="./../includes/images/creativecommons.png" 
+      alt="Creative Commons Icon for CC-A-NC-SA.">
+      </td><td>
+
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+      This work is under the Creative Commons <br>
+        Attribution - NonCommercial - ShareAlike International License.</a>
+      </td></tr></table>
+    
+  </footer>
+  <script>
+
+    const root = document.documentElement
+    const range = document.querySelector('.text-slider')
+
+    //As the slider range value changes, do something 
+    range.addEventListener('input', handleSlider)
+
+    //as the value in the input changes, do something.
+    function handleInputChange(e) {
+      let value = e.target.value
+      let inputId = e.target.parentNode.id
+      let inputBg = `--bg-${inputId}`
+      root.style.setProperty(inputBg, value)
+    }
+
+    function handleSlider(e) {
+      let value = e.target.value
+      root.style.setProperty('--slider', value)
+    }
+
+    let reset = slider.getAttribute('--slider');
+let resetter = document.createElement('button');
+resetter.textContent = '↺';
+resetter.setAttribute('title', reset + unit);
+resetter.addEventListener("click",(e) => {
+	slider.value = reset;
+	slider.dispatchEvent(
+	    new MouseEvent('input', {view: window, bubbles: false})
+	);
+});
+slider.after(resetter);
+  </script>
+
+</body>
+
+</html>
